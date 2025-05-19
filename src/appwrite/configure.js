@@ -64,6 +64,31 @@ export class Service {
       throw error;
     }
   }
+
+  //File upload services
+
+  async uploadFiles(file) {
+    try {
+      return await this.bucket.createFile(conf.appwriteBucketId, ID.unique(), file);
+    } catch (error) {
+      throw error;
+      return false;
+    }
+  }
+
+  async deleteFiles(fileId) {
+    try {
+      await this.bucket.deleteFile(conf.appwriteBucketId, fileId);
+      return true;
+    } catch (error) {
+      throw error;
+      return false;
+    }
+  }
+
+  getFilePreview(fileId) {
+    return this.bucket.getFilePreview(conf.appwriteBucketId, fileId);
+  }
 }
 
 const service = new Service();
